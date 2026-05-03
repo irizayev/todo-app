@@ -111,19 +111,20 @@ def delete_task(id: int, db: Session = Depends(get_db)):
   return {"ok": True}
 
 
-DIST = "frontend/dist"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DIST = os.path.join(BASE_DIR, "frontend", "dist")
 
 if os.path.exists(DIST):
-  app.mount("/assets", StaticFiles(directory=f"{DIST}/assets"), name="assets")
+  app.mount("/assets", StaticFiles(directory=os.path.join(DIST, "assets")), name="assets")
 
   @app.get("/favicon.svg")
   def favicon():
-    return FileResponse(f"{DIST}/favicon.svg")
+    return FileResponse(os.path.join(DIST, "favicon.svg"))
 
   @app.get("/icons.svg")
   def icons():
-    return FileResponse(f"{DIST}/icons.svg")
+    return FileResponse(os.path.join(DIST, "icons.svg"))
 
   @app.get("/{full_path:path}")
   def serve_frontend(full_path: str):
-    return FileResponse(f"{DIST}/index.html")
+    return FileResponse(os.path.join(DIST, "index.html"))
