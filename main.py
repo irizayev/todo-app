@@ -1,7 +1,6 @@
 import os
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from models import Task
 from database import session, engine
@@ -114,17 +113,14 @@ def delete_task(id: int, db: Session = Depends(get_db)):
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DIST = os.path.join(BASE_DIR, "frontend", "dist")
 
-if os.path.exists(DIST):
-  app.mount("/assets", StaticFiles(directory=os.path.join(DIST, "assets")), name="assets")
 
-  @app.get("/favicon.svg")
-  def favicon():
-    return FileResponse(os.path.join(DIST, "favicon.svg"))
-
-  @app.get("/icons.svg")
-  def icons():
-    return FileResponse(os.path.join(DIST, "icons.svg"))
-
-  @app.get("/{full_path:path}")
-  def serve_frontend(full_path: str):
-    return FileResponse(os.path.join(DIST, "index.html"))
+@app.get("/{full_path:path}")
+def serve_frontend(full_path: str):
+  if full_path:
+    file_path = os.path.join(DIST, full_path)
+    if os.path.isfile(file_path):
+      return FileResponse(file_path)
+  index = os.path.join(DIST, "index.html")
+  if os.path.isfile(index):
+    return FileResponse(index)
+  return {"dist": DIST, "exists": os.path.exists(DIST)}
