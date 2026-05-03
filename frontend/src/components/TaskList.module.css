@@ -1,0 +1,140 @@
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 14px;
+  align-items: start;
+  padding: 18px 4px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.checkbox {
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--line);
+  background: var(--paper);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  margin-top: 2px;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.checkbox:hover { background: var(--accent-soft); }
+
+.checkbox svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--done);
+  stroke-width: 3;
+  fill: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.done .checkbox svg { opacity: 1; }
+
+.body { min-width: 0; }
+
+.text {
+  font-family: "Fraunces", serif;
+  font-size: 19px;
+  line-height: 1.35;
+  word-wrap: break-word;
+  cursor: text;
+}
+
+.done .text {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--accent);
+}
+
+.editInput {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid var(--accent);
+  background: transparent;
+  font-family: "Fraunces", serif;
+  font-size: 19px;
+  padding: 2px 0;
+  outline: none;
+  color: var(--ink);
+}
+
+.metaRow {
+  margin-top: 6px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+
+.id {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.task:hover .actions { opacity: 1; }
+
+.actions button {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 4px 8px;
+  font-family: inherit;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.actions button:hover {
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.del:hover {
+  color: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted);
+}
+
+.emptyBig {
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-size: 28px;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+
+.emptySmall {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
