@@ -5,7 +5,7 @@ import Filters from './components/Filters'
 import TaskList from './components/TaskList'
 import Toast from './components/Toast'
 
-const API = import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000'
+const API = import.meta.env.VITE_API_URL ?? (import.meta.env.DEV ? 'http://127.0.0.1:8000' : '')
 
 export default function App() {
   const [tasks, setTasks] = useState([])
