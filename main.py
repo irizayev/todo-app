@@ -1,5 +1,8 @@
+import os
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from models import Task
 from database import session, engine
 import database_models
@@ -106,3 +109,21 @@ def delete_task(id: int, db: Session = Depends(get_db)):
     return {"error": "not found"}
   db.commit()
   return {"ok": True}
+
+
+DIST = "frontend/dist"
+
+if os.path.exists(DIST):
+  app.mount("/assets", StaticFiles(directory=f"{DIST}/assets"), name="assets")
+
+  @app.get("/favicon.svg")
+  def favicon():
+    return FileResponse(f"{DIST}/favicon.svg")
+
+  @app.get("/icons.svg")
+  def icons():
+    return FileResponse(f"{DIST}/icons.svg")
+
+  @app.get("/{full_path:path}")
+  def serve_frontend(full_path: str):
+    return FileResponse(f"{DIST}/index.html")
