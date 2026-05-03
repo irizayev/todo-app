@@ -12,13 +12,20 @@ function formatDate(date) {
 
 function TaskItem({ task, onDelete, onUpdate }) {
   const [editing, setEditing] = useState(false)
-  const [draft, setDraft] = useState(task.title)
+  const [draftTitle, setDraftTitle] = useState(task.title)
+  const [draftDesc, setDraftDesc] = useState(task.description || '')
+
+  function startEdit() {
+    setDraftTitle(task.title)
+    setDraftDesc(task.description || '')
+    setEditing(true)
+  }
 
   function commitEdit() {
-    const trimmed = draft.trim()
+    const trimmed = draftTitle.trim()
     setEditing(false)
-    if (!trimmed || trimmed === task.title) return
-    onUpdate(task.id, { title: trimmed })
+    if (!trimmed) return
+    onUpdate(task.id, { title: trimmed, description: draftDesc.trim() })
   }
 
   return (
@@ -32,19 +39,31 @@ function TaskItem({ task, onDelete, onUpdate }) {
 
       <div className={styles.body}>
         {editing ? (
-          <input
-            className={styles.editInput}
-            value={draft}
-            autoFocus
-            onChange={e => setDraft(e.target.value)}
-            onBlur={commitEdit}
-            onKeyDown={e => {
-              if (e.key === 'Enter') commitEdit()
-              if (e.key === 'Escape') { setDraft(task.title); setEditing(false) }
-            }}
-          />
+          <>
+            <input
+              className={styles.editInput}
+              value={draftTitle}
+              autoFocus
+              onChange={e => setDraftTitle(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter') commitEdit()
+                if (e.key === 'Escape') setEditing(false)
+              }}
+            />
+            <input
+              className={styles.editInputDesc}
+              value={draftDesc}
+              placeholder="описание…"
+              onChange={e => setDraftDesc(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter') commitEdit()
+                if (e.key === 'Escape') setEditing(false)
+              }}
+              onBlur={commitEdit}
+            />
+          </>
         ) : (
-          <div className={styles.text} onDoubleClick={() => setEditing(true)}>
+          <div className={styles.text} onDoubleClick={startEdit}>
             {task.title}
           </div>
         )}
@@ -57,7 +76,7 @@ function TaskItem({ task, onDelete, onUpdate }) {
       </div>
 
       <div className={styles.actions}>
-        <button onClick={() => setEditing(true)}>edit</button>
+        <button onClick={startEdit}>edit</button>
         <button
           className={styles.del}
           onClick={() => {

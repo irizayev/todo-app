@@ -75,6 +75,21 @@
   color: var(--ink);
 }
 
+.editInputDesc {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  padding: 4px 0;
+  outline: none;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+.editInputDesc::placeholder { color: var(--muted); }
+
 .metaRow {
   margin-top: 6px;
   font-size: 10px;
