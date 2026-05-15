@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from models import Task
@@ -49,7 +49,7 @@ def get_task_by_id(id: int, db: Session = Depends(get_db)):
   task = db.query(database_models.Task).filter(database_models.Task.id == id).first()
   if task:
     return task
-  return {"error": "not found"}
+  raise HTTPException(status_code=404, detail="not found")
 
 
 @app.post("/task")
@@ -65,7 +65,7 @@ def add_task(task: Task, db: Session = Depends(get_db)):
 def update_task(id: int, task: Task, db: Session = Depends(get_db)):
   db_task = db.query(database_models.Task).filter(database_models.Task.id == id).first()
   if not db_task:
-    return {"error": "not found"}
+    raise HTTPException(status_code=404, detail="not found")
   db_task.title = task.title
   db_task.description = task.description
   db_task.date = task.date
@@ -78,7 +78,7 @@ def update_task(id: int, task: Task, db: Session = Depends(get_db)):
 def delete_task(id: int, db: Session = Depends(get_db)):
   deleted = db.query(database_models.Task).filter(database_models.Task.id == id).delete()
   if deleted == 0:
-    return {"error": "not found"}
+    raise HTTPException(status_code=404, detail="not found")
   db.commit()
   return {"ok": True}
 
