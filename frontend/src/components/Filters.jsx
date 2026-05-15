@@ -1,9 +1,9 @@
 import styles from './Filters.module.css'
 
 const OPTIONS = [
-  { key: 'all', label: 'все' },
-  { key: 'active', label: 'активные' },
-  { key: 'done', label: 'сделано' },
+  { key: 'all', label: 'all' },
+  { key: 'active', label: 'active' },
+  { key: 'done', label: 'done' },
 ]
 
 export default function Filters({ filter, onFilter, activeCount, total }) {

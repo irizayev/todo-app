@@ -20,7 +20,7 @@ export default function Composer({ onAdd }) {
     <form className={styles.composer} onSubmit={handleSubmit} autoComplete="off">
       <textarea
         className={styles.textarea}
-        placeholder="что нужно сделать…"
+        placeholder="what needs to be done…"
         rows={2}
         maxLength={200}
         value={title}
@@ -35,7 +35,7 @@ export default function Composer({ onAdd }) {
       <div className={styles.bar}>
         <input
           className={styles.descInput}
-          placeholder="описание…"
+          placeholder="description…"
           maxLength={300}
           value={description}
           onChange={e => setDescription(e.target.value)}

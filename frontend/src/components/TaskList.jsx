@@ -5,7 +5,7 @@ function formatDate(date) {
   if (!date) return null
   if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     const d = new Date(date + 'T00:00:00')
-    return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' })
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
   }
   return date
 }
@@ -53,7 +53,7 @@ function TaskItem({ task, onDelete, onUpdate }) {
             <input
               className={styles.editInputDesc}
               value={draftDesc}
-              placeholder="описание…"
+              placeholder="description…"
               onChange={e => setDraftDesc(e.target.value)}
               onKeyDown={e => {
                 if (e.key === 'Enter') commitEdit()
@@ -80,7 +80,7 @@ function TaskItem({ task, onDelete, onUpdate }) {
         <button
           className={styles.del}
           onClick={() => {
-            if (confirm(`удалить "${task.title}"?`)) onDelete(task.id)
+            if (confirm(`delete "${task.title}"?`)) onDelete(task.id)
           }}
         >
           del
@@ -94,7 +94,7 @@ export default function TaskList({ tasks, onDelete, onUpdate }) {
   if (tasks.length === 0) {
     return (
       <div className={styles.empty}>
-        <div className={styles.emptyBig}>пусто.</div>
+        <div className={styles.emptyBig}>empty.</div>
         <div className={styles.emptySmall}>add your first task above</div>
       </div>
     )
