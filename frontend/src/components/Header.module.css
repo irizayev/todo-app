@@ -41,10 +41,6 @@
   animation: none;
 }
 
-.url {
-  margin-top: 6px;
-  color: var(--muted);
-}
 
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
