@@ -13,7 +13,7 @@ export default function Header({ status }) {
           <span className={styles.pulse} />
           <span>{status === 'connecting' ? 'connecting…' : status === 'online' ? 'connected' : 'offline'}</span>
         </div>
-        <div className={styles.url}>http://127.0.0.1:8000</div>
+        <div className={styles.url}>{import.meta.env.DEV ? 'http://127.0.0.1:8000' : window.location.origin}</div>
       </div>
     </header>
   )
