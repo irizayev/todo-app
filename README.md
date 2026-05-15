@@ -2,7 +2,7 @@
 
 A full-stack Todo App built to practice REST API development with FastAPI.
 
-🔗 **Live demo:** [todo-app-ten-psi-21.vercel.app](https://todo-app-ten-psi-21.vercel.app)
+🔗 **Live demo:** [web-production-a3cb7.up.railway.app](https://web-production-a3cb7.up.railway.app)
 
 ---
 
